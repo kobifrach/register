@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>רישום לקוח חדש</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap');
+        body {
+            font-family: 'Assistant', sans-serif;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div id="notification-container" class="fixed top-4 left-4 z-50 flex flex-col gap-2 max-w-sm w-full"></div>
+
+    <div class="w-full max-w-3xl animate-fade-in">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            
+            <!-- Header Section -->
+            <div class="bg-gradient-to-r from-indigo-600 to-blue-500 p-8 pb-5 text-white text-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-10 -mt-10 blur-xl"></div>
+                <div class="absolute bottom-0 left-0 w-24 h-24 bg-white opacity-10 rounded-full -ml-5 -mb-5 blur-xl"></div>
+                
+                <h1 class="text-3xl font-bold mb-2 relative z-10 flex items-center justify-center gap-3">
+                    טופס הצטרפות
+                </h1>
+                <p class="text-indigo-100 opacity-90 relative z-10">
+                    אנא מלא את הפרטים הבאים על מנת להרשם כלקוח חדש של משרד עו"ד קובי איפרח.
+                </p>
+            </div>
+
+            <div class="p-4 md:p-6" id="main-content">
+                <!-- Form State -->
+                <form id="registration-form" class="w-full space-y-4">
+                    
+                    <!-- Personal Info Section -->
+                    <div>
+                        <div class="flex items-center gap-2 mb-4 text-indigo-800 font-semibold border-b pb-2 border-indigo-100">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                            <span class="text-lg text-right">פרטים אישיים</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-medium text-gray-700">שם פרטי <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input id="firstName" type="text" class="input-field w-full p-2 text-lg rounded-lg border-2 border-gray-200 bg-gray-50 outline-none focus:border-indigo-500 focus:bg-white">
+                                </div>
+                                <small id="err-firstName" class="text-red-500 text-xs hidden"></small>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-medium text-gray-700">שם משפחה <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input id="lastName" type="text" class="input-field w-full p-2 text-lg rounded-lg border-2 border-gray-200 bg-gray-50 outline-none focus:border-indigo-500 focus:bg-white">
+                                </div>
+                                <small id="err-lastName" class="text-red-500 text-xs hidden"></small>
+                            </div>
+
+                            <div class="flex flex-col gap-2 md:col-span-2 text-right">
+                                <label class="text-sm font-medium text-gray-700">מספר זהות <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input id="idNumber" type="text" maxlength="9" class="input-field w-full p-2 text-lg rounded-lg border-2 border-gray-200 bg-gray-50 outline-none focus:border-indigo-500 focus:bg-white" placeholder="000000000">
+                                </div>
+                                <small id="err-idNumber" class="text-red-500 text-xs hidden"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Info Section -->
+                    <div>
+                        <div class="flex items-center gap-2 mb-4 text-indigo-800 font-semibold border-b pb-2 border-indigo-100">
+                            <i data-lucide="phone" class="w-5 h-5"></i>
+                            <span class="text-lg">פרטי התקשרות</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-medium text-gray-700">טלפון זמין <span class="text-indigo-400 italic text-xs">(חובה אם אין אימייל)</span></label>
+                                <div class="relative">
+                                    <input id="phone" type="text" maxlength="10" class="input-field w-full p-2 text-lg rounded-lg border-2 border-gray-200 bg-gray-50 outline-none focus:border-indigo-500 focus:bg-white">
+                                </div>
+                                <small id="err-phone" class="text-red-500 text-xs hidden"></small>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <label class="text-sm font-medium text-gray-700">טלפון נוסף</label>
+                                <div class="relative">
+                                    <input id="phone2" type="text" class="input-field w-full p-2 pr-10 text-lg rounded-lg border-2 border-gray-200 bg-gray-50 outline-none focus:border-indigo-500 focus:bg-white">
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-2 md:col-span-2">
+                                <label class="text-sm font-medium text-gray-700">כתובת אימייל <span class="text-indigo-400 italic text-xs">(חובה אם אין טלפון)</span></label>
+                                <div class="relative">
+                                    <input id="email" type="email" class="input-field w-full p-2 text-lg rounded-lg border-2 border-gray-200 bg-gray-50 outline-none focus:border-indigo-500 focus:bg-white">
+                                </div>
+                                <small id="err-email" class="text-red-500 text-xs hidden"></small>
+                                <p id="err-contact" class="text-red-500 text-sm font-bold mt-2 hidden">⚠ יש להזין לפחות מספר טלפון או כתובת אימייל</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="pt-2 border-t border-gray-100 flex justify-end">
+                        <button type="submit" id="submit-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-10 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex justify-center items-center gap-2">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            <span>שלח</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        const form = document.getElementById('registration-form');
+        const mainContent = document.getElementById('main-content');
+        const notificationContainer = document.getElementById('notification-container');
+
+        // Utils
+        const validateID = (id) => {
+            if (id.length !== 9 || isNaN(id)) return false;
+            let sum = 0;
+            for (let i = 0; i < 9; i++) {
+                let num = Number(id[i]) * ((i % 2) + 1);
+                sum += num > 9 ? num - 9 : num;
+            }
+            return sum % 10 === 0;
+        };
+
+        const showNotification = (type, title, message) => {
+            const toast = document.createElement('div');
+            const bgClass = type === 'success' ? 'bg-indigo-50 border-indigo-200 text-indigo-800' : 
+                          type === 'error' ? 'bg-red-50 border-red-200 text-red-800' : 
+                          'bg-yellow-50 border-yellow-200 text-yellow-800';
+            
+            toast.className = `flex items-start p-4 rounded-lg border shadow-lg animate-fade-in ${bgClass}`;
+            toast.innerHTML = `
+                <div class="flex-1 pt-0.5 ml-3">
+                    <h3 class="text-sm font-bold">${title}</h3>
+                    <div class="mt-1 text-sm opacity-90">${message}</div>
+                </div>
+                <button onclick="this.parentElement.remove()" class="mr-4 opacity-60 hover:opacity-100">✕</button>
+            `;
+            notificationContainer.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        };
+
+        const setFieldError = (id, msg) => {
+            const input = document.getElementById(id);
+            const errEl = document.getElementById(`err-${id}`);
+            if (msg) {
+                input.classList.add('border-red-300', 'bg-red-50');
+                errEl.textContent = msg;
+                errEl.classList.remove('hidden');
+            } else {
+                input.classList.remove('border-red-300', 'bg-red-50');
+                errEl.classList.add('hidden');
+            }
+        };
+
+        // Form Logic
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                idNumber: document.getElementById('idNumber').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                phone2: document.getElementById('phone2').value.trim(),
+                email: document.getElementById('email').value.trim()
+            };
+
+            let isValid = true;
+
+            // Basic required
+            if (!data.firstName) { setFieldError('firstName', 'שם פרטי הוא שדה חובה'); isValid = false; } else setFieldError('firstName', null);
+            if (!data.lastName) { setFieldError('lastName', 'שם משפחה הוא שדה חובה'); isValid = false; } else setFieldError('lastName', null);
+            
+            // ID validation
+            if (!data.idNumber) {
+                setFieldError('idNumber', 'מספר זהות הוא שדה חובה'); isValid = false;
+            } else if (!validateID(data.idNumber)) {
+                setFieldError('idNumber', 'מספר זהות לא תקין'); isValid = false;
+            } else setFieldError('idNumber', null);
+
+            // Contact validation
+            const hasPhone = data.phone.length >= 9;
+            const hasEmail = data.email.includes('@');
+            const contactErr = document.getElementById('err-contact');
+
+            if (!hasPhone && !hasEmail) {
+                contactErr.classList.remove('hidden');
+                setFieldError('phone', ' ');
+                setFieldError('email', ' ');
+                isValid = false;
+            } else {
+                contactErr.classList.add('hidden');
+                setFieldError('phone', null);
+                setFieldError('email', null);
+            }
+
+            if (!isValid) {
+                showNotification('warn', 'שים לב', 'יש לתקן את השדות המסומנים');
+                return;
+            }
+
+            // Success Animation
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="animate-spin inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"></span> שולח...';
+
+            // Send to API
+            fetch('https://gateway-v8pc.onrender.com/api/forms_submissions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Submission failed');
+                return response.json();
+            })
+            .then(result => {
+                mainContent.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-12 text-center animate-fade-in">
+                        <div class="rounded-full bg-indigo-100 p-6 mb-6 ring-8 ring-indigo-50">
+                            <i data-lucide="check-circle-2" class="w-20 h-20 text-indigo-600"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2">תודה רבה, ${data.firstName}!</h2>
+                        <p class="text-lg text-gray-600 max-w-md mb-8">
+                            הפרטים שלך נקלטו בהצלחה במערכת. בימים הקרובים, המזכירה תפתח לך משתמש ותשלח לך פרטי התחברות..
+                        </p>
+                    </div>
+                `;
+                lucide.createIcons();
+            })
+            .catch(error => {
+                showNotification('error', 'שגיאה', 'שליחת הטופס נכשלה. אנא נסה שוב מאוחר יותר.');
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="send" class="w-5 h-5"></i><span>שלח</span>';
+                lucide.createIcons();
+            });
+        });
+
+        // Clear errors on input
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('input', () => {
+                setFieldError(input.id, null);
+                document.getElementById('err-contact').classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
