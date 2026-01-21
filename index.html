@@ -111,6 +111,12 @@
                                 <small id="err-email" class="text-red-500 text-xs hidden"></small>
                                 <p id="err-contact" class="text-red-500 text-sm font-bold mt-2 hidden">⚠ יש להזין לפחות מספר טלפון או כתובת אימייל</p>
                             </div>
+                            <div class="flex flex-col gap-2 md:col-span-2">
+                                <label class="text-sm font-medium text-gray-700">הערה (אופציונלי)</label>
+                                <div class="relative">
+                                    <textarea id="comment" rows="1" class="input-field w-full p-2 text-lg rounded-lg border-2 border-gray-200 bg-gray-50 outline-none focus:border-indigo-500 focus:bg-white" placeholder="יש לך משהו חשוב לציין?"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -130,6 +136,40 @@
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
+
+        // Scale main wrapper to fit viewport height so page does not show vertical scrollbar
+        function fitToViewport() {
+            const wrapper = document.getElementById('main-wrapper');
+            if (!wrapper) return;
+            // hide body scrollbar
+            document.documentElement.style.overflowY = 'hidden';
+            document.body.style.overflowY = 'hidden';
+
+            // Reset any previous transform to measure natural height
+            wrapper.style.transform = '';
+            wrapper.style.marginTop = '';
+
+            const wrapperRect = wrapper.getBoundingClientRect();
+            const wrapperHeight = wrapperRect.height;
+            const viewportHeight = window.innerHeight;
+
+            if (wrapperHeight <= 0) return;
+
+            const scale = Math.min(1, viewportHeight / wrapperHeight);
+            wrapper.style.transform = `scale(${scale})`;
+
+            // If scaled down, center vertically a bit to look nicer
+            if (scale < 1) {
+                const extra = Math.max(0, (viewportHeight - wrapperHeight * scale) / 2);
+                wrapper.style.marginTop = `${extra}px`;
+            } else {
+                wrapper.style.marginTop = '';
+            }
+        }
+
+        // Run on load and resize
+        window.addEventListener('load', () => setTimeout(fitToViewport, 50));
+        window.addEventListener('resize', () => setTimeout(fitToViewport, 50));
 
         const form = document.getElementById('registration-form');
         const mainContent = document.getElementById('main-content');
@@ -187,7 +227,8 @@
                 idNumber: document.getElementById('idNumber').value.trim(),
                 phone: document.getElementById('phone').value.trim(),
                 phone2: document.getElementById('phone2').value.trim(),
-                email: document.getElementById('email').value.trim()
+                email: document.getElementById('email').value.trim(),
+                comment: (document.getElementById('comment') ? document.getElementById('comment').value.trim() : '')
             };
 
             let isValid = true;
