@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="flex flex-col gap-2 md:col-span-2 text-right">
-                                <label class="text-sm font-medium text-gray-700">מספר זהות <span class="text-red-500">*</span></label>
+                                <label class="text-sm font-medium text-gray-700">מספר זהות</label>
                                 <div class="relative">
                                     <input id="idNumber" type="text" maxlength="9" class="input-field w-full p-2 text-lg rounded-lg border-2 border-gray-200 bg-gray-50 outline-none focus:border-indigo-500 focus:bg-white">
                                 </div>
@@ -238,9 +238,7 @@
             if (!data.lastName) { setFieldError('lastName', 'שם משפחה הוא שדה חובה'); isValid = false; } else setFieldError('lastName', null);
             
             // ID validation
-            if (!data.idNumber) {
-                setFieldError('idNumber', 'מספר זהות הוא שדה חובה'); isValid = false;
-            } else if (!validateID(data.idNumber)) {
+            if (data.idNumber && data.idNumber.length > 0 && !validateID(data.idNumber)) {
                 setFieldError('idNumber', 'מספר זהות לא תקין'); isValid = false;
             } else setFieldError('idNumber', null);
 
